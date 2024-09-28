@@ -1,9 +1,9 @@
 // index.js
 // require(".env").config();
 import pkg from "twilio";
-const { twiml: TwilioTwiml } = pkg;
+const { twiml } = pkg;
 import express from "express";
-const { MessagingResponse } = pkg;
+const { MessagingResponse } = twiml;
 // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express(); // Import express
@@ -30,7 +30,7 @@ const sendWhatsAppMessage = (to, message) => {
 // WhatsApp webhook to receive incoming messages
 app.post("/webhook", async (req, res) => {
   const twiml = new MessagingResponse();
-  const incomingMessage = req.body.Body.toLowerCase();
+  const incomingMessage = req.body.Body ? req.body.Body.toLowerCase() : "";
   const from = req.body.From;
 
   if (incomingMessage.includes("hi")) {
