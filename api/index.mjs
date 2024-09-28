@@ -31,6 +31,8 @@ const sendWhatsAppMessage = (to, message) => {
 app.post("/webhook", async (req, res) => {
   const twiml = new MessagingResponse();
   const incomingMessage = req.body.Body ? req.body.Body.toLowerCase() : "";
+  console.log("Incoming Message:", req.body.Body);
+
   const from = req.body.From;
 
   if (incomingMessage.includes("hi")) {
