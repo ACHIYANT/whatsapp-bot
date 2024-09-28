@@ -1,20 +1,22 @@
 // index.js
 require("dotenv").config();
-const express = require("express");
-const bodyParser = require("body-parser");
-const axios = require("axios");
-const { MessagingResponse } = require("twilio").twiml;
+import express from "express";
+import { urlencoded } from "body-parser";
+import axios from "axios";
+import { twiml as _twiml } from "twilio";
+const { MessagingResponse } = _twiml;
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const TWILIO_ACCOUNT_SID = "ACf0acb71f3d2b8c08cfc1a57f27435163";
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(urlencoded({ extended: false }));
 
 const TWILIO_WHATSAPP_NUMBER = process.env.TWILIO_WHATSAPP_NUMBER;
 
 // Helper functions
 const sendWhatsAppMessage = (to, message) => {
   const client = require("twilio")(
-    process.env.TWILIO_ACCOUNT_SID,
+    TWILIO_ACCOUNT_SID,
     process.env.TWILIO_AUTH_TOKEN
   );
   return client.messages.create({
